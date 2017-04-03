@@ -43,24 +43,9 @@ for i=1:length(loudspeaker)
     theta_hat = theta_hat + G*(mike1(i) - transpose(phi)*theta_hat);
     
     output(i) = mike1(i) - theta_hat(2)*loudspeakerDelay1 - theta_hat(3)*loudspeakerDelay2;
+    
 end
 
-
-loudspeakerDelay1 = 0;
-loudspeakerDelay2 = 0;
-
-% for i=1:length(loudspeaker)
-%     if (i > D1)
-%         loudspeakerDelay1 = loudspeaker(i - D1);
-%     end
-%        
-%     if (i > D2)
-%         loudspeakerDelay2 = loudspeaker(i - D2);
-%     end 
-%     
-%     output(i) = mike1(i) - theta_hat(2)*loudspeakerDelay1 - theta_hat(3)*loudspeakerDelay2; 
-% 
-% end
 
 %% A.1
 % RLS with noise
@@ -84,6 +69,8 @@ theta_hat = [a1; a2; a3];
 
 P = eye(3);
 
+noisy_output  = zeros(1,length(loudspeaker));
+
 for i=1:length(loudspeaker)
     if (i > D1)
         loudspeakerDelay1 = loudspeaker(i - D1);
@@ -101,23 +88,8 @@ for i=1:length(loudspeaker)
 
     theta_hat = theta_hat + G*(noisymike1(i) - transpose(phi)*theta_hat);
     
-end
-
-noisy_output  = zeros(1,length(loudspeaker));
-loudspeakerDelay1 = 0;
-loudspeakerDelay2 = 0;
-
-for i=1:length(loudspeaker)
-    if (i > D1)
-        loudspeakerDelay1 = loudspeaker(i - D1);
-    end
-       
-    if (i > D2)
-        loudspeakerDelay2 = loudspeaker(i - D2);
-    end 
-    
     noisy_output(i) = noisymike1(i) - theta_hat(2)*loudspeakerDelay1 - theta_hat(3)*loudspeakerDelay2; 
-
+    
 end
 
 % sound(loudspeaker)
@@ -153,6 +125,8 @@ upper_mu = 1/mean(mike1.^2);
 disp(['Upper mu = ' num2str(upper_mu)])
 mu = 3;
 
+output  = zeros(1,length(loudspeaker));
+
 for i=1:length(loudspeaker)
     if (i > D1)
         loudspeakerDelay1 = loudspeaker(i - D1);
@@ -168,25 +142,10 @@ for i=1:length(loudspeaker)
 
     theta_hat = theta_hat + G*(mike1(i) - transpose(phi)*theta_hat);
     
-end
-
-
-output  = zeros(1,length(loudspeaker));
-loudspeakerDelay1 = 0;
-loudspeakerDelay2 = 0;
-
-for i=1:length(loudspeaker)
-    if (i > D1)
-        loudspeakerDelay1 = loudspeaker(i - D1);
-    end
-       
-    if (i > D2)
-        loudspeakerDelay2 = loudspeaker(i - D2);
-    end 
-    
     output(i) = mike1(i) - theta_hat(2)*loudspeakerDelay1 - theta_hat(3)*loudspeakerDelay2; 
-
+    
 end
+
 
 % sound(loudspeaker)
 % pause
@@ -221,6 +180,8 @@ upper_mu = 1/mean(noisymike1.^2);
 disp(['Upper mu = ' num2str(upper_mu)])
 mu = 3;
 
+noisy_output  = zeros(1,length(loudspeaker));
+
 for i=1:length(loudspeaker)
     if (i > D1)
         loudspeakerDelay1 = loudspeaker(i - D1);
@@ -235,25 +196,9 @@ for i=1:length(loudspeaker)
     G = mu*phi;
 
     theta_hat = theta_hat + G*(noisymike1(i) - transpose(phi)*theta_hat);
-    
-end
-
-
-noisy_output  = zeros(1,length(loudspeaker));
-loudspeakerDelay1 = 0;
-loudspeakerDelay2 = 0;
-
-for i=1:length(loudspeaker)
-    if (i > D1)
-        loudspeakerDelay1 = loudspeaker(i - D1);
-    end
-       
-    if (i > D2)
-        loudspeakerDelay2 = loudspeaker(i - D2);
-    end 
-    
+   
     noisy_output(i) = noisymike1(i) - theta_hat(2)*loudspeakerDelay1 - theta_hat(3)*loudspeakerDelay2; 
-
+    
 end
 
 % sound(loudspeaker)
