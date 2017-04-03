@@ -1,4 +1,7 @@
 %% A.1
+
+% Test Git Comment at top
+
 % RLS without noise
 
 clear all
