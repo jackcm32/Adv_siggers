@@ -47,6 +47,12 @@ for i=1:length(loudspeaker)
 end
 
 
+% sound(loudspeaker)
+% pause
+% sound(noisymike2)
+% pause
+sound(output)
+
 %% B.1
 % Time varying RLS with noise
 
@@ -99,7 +105,7 @@ end
 % pause
 % sound(noisymike2)
 % pause
-% sound(noisy_output)
+sound(noisy_output)
 
 %% B.2 
 % Time varying LMS without noise
@@ -155,7 +161,7 @@ end
 % pause
 % sound(mike2)
 % pause
-% sound(output)
+sound(output)
 
 %% A.2 
 % Time varying LMS with noise
@@ -210,5 +216,5 @@ end
 % pause
 % sound(noisymike2)
 % pause
-% sound(noisy_output)
+sound(noisy_output)
 
