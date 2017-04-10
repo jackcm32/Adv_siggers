@@ -4,8 +4,7 @@
 // input signal history
 float insignal1[100], insignal2[100];
 
-// global mu value
-float mu = 1;
+
 
 // function prototypes
 void gainestimateLMS(float,float,float,float[2]);
@@ -27,7 +26,7 @@ void gainestimate(float in1, float in2, float out, float gain[2])
     // estimate gain
     gain[0] = 0;
     gain[1] = 1;
-    // gainestimateLMS(in1, in2, out, gain);
+    gainestimateLMS(in1, in2, out, gain);
     // gainestimateRLS(in1, in2, out, gain);
 }
 
@@ -35,6 +34,8 @@ void gainestimateLMS(float in1, float in2, float out, float gain[2])
 {
     // TODO: Implement gain estimation using LMS algorithm
     static float theta_hat1 = 0, theta_hat2 = 1.0;
+
+    float mu = 1E-18;
 
     float err = out - (in1 * theta_hat1 + in2 * theta_hat2);
 
@@ -48,5 +49,5 @@ void gainestimateLMS(float in1, float in2, float out, float gain[2])
 
 void gainestimateRLS(float in1, float in2, float out, float gain[2])
 {
-	// TODO: Implement gain estimation using RLS algorithm
+    // TODO: Implement gain estimation using RLS algorithm
 }
