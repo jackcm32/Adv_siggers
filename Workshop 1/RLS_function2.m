@@ -1,5 +1,9 @@
 function [ output, theta_hat ] = RLS_function2(loudspeaker, mike1, init_params, P_init_scale, lambda)
 
+% ----------------------------------- %
+%     RLS function with lambda value
+% ----------------------------------- %
+
 Fs = 8192; %sampling freq
 D1 = 1 * Fs; % delay 1
 D2 = 2.5 * Fs; % delay 2

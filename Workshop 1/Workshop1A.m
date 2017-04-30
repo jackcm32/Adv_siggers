@@ -1,21 +1,25 @@
 %% A.1
 % RLS without noise
 
-clear all
-close all
-clc
+clear all; close all; clc
 load('data1.mat');
 
+% Constants
 Fs = 8192; %sampling freq
 D1 = 1 * Fs; % delay 1
 D2 = 2.5 * Fs; % delay 2
 timespan = [0: 1/Fs: length(loudspeaker)/Fs - 1/Fs]; % Timespan for time-axis
 
-
 % RLS with inital params = 0
 
 init_params = [1; 0; 0];
 P_init_scale = 1;
+
+% ----------------------------------- %
+%     RLS: Different initial conditions.  
+% ----------------------------------- %
+
+% RLS with initial params = 0
 
 [output, theta_hat] = RLS_function(loudspeaker, mike1, init_params, P_init_scale);
 
@@ -58,7 +62,9 @@ ylim([0 1])
 saveas(gcf, 'figures/q1a_params.png')
 
 %%
-% RLS P scaling
+% ----------------------------------- %
+%     RLS: P scaling 
+% ----------------------------------- %
 clear all
 close all
 clc
@@ -154,8 +160,10 @@ ylabel('Amplitude')
 
 saveas(gcf, 'figures/q1a_Pinit_output_diff.png')
 
-%% A.1
-% RLS with noise
+%% 
+% ----------------------------------- %
+%     RLS: With Noise
+% ----------------------------------- %
 
 clear all
 close all
@@ -167,15 +175,11 @@ D1 = 1 * Fs; % delay 1
 D2 = 2.5 * Fs; % delay 2
 timespan = [0: 1/Fs: length(loudspeaker)/Fs - 1/Fs]; % Timespan for time-axis
 
-
 init_params = [1; 0; 0];
 P_init_scale = 1;
 
 [output, theta_hat] = RLS_function(loudspeaker, mike1, init_params, P_init_scale);
 [noisy_output, noisy_theta_hat] = RLS_function(loudspeaker, noisymike1, init_params, P_init_scale);
-
-% sound(noisy_output)
-
 
 figure(4)
 subplot(2,1,1)
@@ -206,6 +210,10 @@ ylim([0 1])
 
 saveas(gcf, 'figures/q1a_noise_params.png')
 
+% ----------------------------------- %
+%     RLS: With noise, comparing output
+% ----------------------------------- %
+
 figure(5)
 subplot(2,1,1)
 plot(timespan, transpose(loudspeaker) - output)
@@ -224,8 +232,10 @@ saveas(gcf, 'figures/q1a_noise_diff.png')
 
 
 
-%% A.2 
-% LMS without noise
+%% 
+% ----------------------------------- %
+%     LMS: No Noise
+% ----------------------------------- %
 
 clear all
 clc
@@ -278,8 +288,9 @@ saveas(gcf,'figures/q1a_lms_params.png')
 
 
 %%
-% LMS mu graphs
-
+% ----------------------------------- %
+%     LMS:Changing Mu
+% ----------------------------------- %
 
 clear all
 clc
@@ -303,7 +314,6 @@ mu = 0.03;
 % LMS no noise with mu = 3 b2=b3 = 0
 mu = 3;
 [output3, theta_hat3] = LMS_function(loudspeaker, mike1, init_params, mu);
-
 
 figure(2)
 subplot(3,1,1)
@@ -349,7 +359,9 @@ saveas(gcf,'figures/q1a_lms_mu.png')
 
 
 %% A.2 
-% LMS with noise
+% ----------------------------------- %
+%     LMS with noise
+% ----------------------------------- %
 
 clear all
 close all
@@ -395,6 +407,10 @@ legend('b_1', 'b_2', 'b_3')
 ylim([0 1])
 
 saveas(gcf, 'figures/q1a_lms_noise_params.png')
+
+% ----------------------------------- %
+%     LMS: Noise, output graphs
+% ----------------------------------- %
 
 figure(5)
 subplot(2,1,1)

@@ -1,0 +1,71 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements 
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{pdfpages}
+\setlength{\columnsep}{1cm}
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\usepackage[margin=1in]{geometry}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+
+
+
+
+
+\begin{document}
+
+
+
+\section*{A-Appendix}
+\subsection*{A-Workshop1A}
+\lstinputlisting{../Workshop1A.m}
+\subsection*{A-Workshop1B}
+\lstinputlisting{../Workshop1B.m}
+\subsection*{A-RLS Function 1}
+\lstinputlisting{../RLS_function.m}
+\subsection*{A-RLS Function with Lambda}
+\lstinputlisting{../RLS_function2.m}
+\subsection*{A-LMS Function}
+\lstinputlisting{../LMS_function.m}
+\subsection*{B- Gain Estimate}
+\lstinputlisting{../SP2WS1-skel/src/gainestimate.c}
+
+
+
+
+\end{document}

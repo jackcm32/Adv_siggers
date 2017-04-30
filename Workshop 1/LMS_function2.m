@@ -1,8 +1,4 @@
-function [ output, theta_hat ] = LMS_function(loudspeaker, mike1, init_params, mu)
-
-% ----------------------------------- %
-%     LMS: function
-% ----------------------------------- %
+function [ output, theta_hat ] = LMS_function2(loudspeaker, mike1, init_params, mu)
 
 Fs = 8192; %sampling freq
 D1 = 1 * Fs; % delay 1
