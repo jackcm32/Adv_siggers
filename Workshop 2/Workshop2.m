@@ -1,3 +1,5 @@
+close all
+
 % Inital values
 c1 =  0.04;
 c2 = -0.04;
@@ -26,16 +28,45 @@ w3 = normrnd(mu, sigma_w);
 F = [ 0 1 0; 0 c2+1 0; c3 0 1+c4];
 U = [0;c2;0];
 V = [0;d2;d3];
-H = [0 0 1];
+H = [0 1 0];
 W = w3;
-
-
 
 tfinal = 6*60;
 
-for 1:1:tfinal
+% Input signal for the gate
+u = 0.25 * ones(1,tfinal);
+
+% Inital conditions
+h = [0.25; 0.01; 0.01];
+
+h3 = zeros(1,tfinal);
+
+for t = 1:1:tfinal
+   
+    h_next = F*h + U*u(t) + V;
+    h3(t) = H*h_next + W;
     
+    
+    d2 = normrnd(mu, sigma_d);
+    d3 = normrnd(mu, sigma_d);
+    w3 = normrnd(mu, sigma_w);
+    V = [0;d2;d3];
+    W = w3;
+    h = h_next;
 end
+
+plot(1:tfinal,h3)
+hold on
+
+sys = ss(F,U,H,W,[]);
+
+tfinal = 6*60;
+T = [1:1:tfinal];
+% U = ones(size(T));
+
+
+lsim(sys,u,T,[0.25; 0.01; 0.01]);
+hold off
 
     
 
