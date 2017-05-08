@@ -22,9 +22,9 @@ d3 = normrnd(mu, sigma_d);
 w3 = normrnd(mu, sigma_w);
 
 % Set up the state space matricies
-A = [0 0 0 0; 0 0 1 0; c1 0 c2+1 0; 0 c3 0 1+c4];
-B = [0;0;d2;d3];
-C = [0 0 1 0];
+A = [ 0 1 0; 0 c2+1 0; c3 0 1+c4];
+B = [0;c2+d2;d3];
+C = [0 0 1];
 D = w3;
 Ts = [];
 
@@ -34,7 +34,7 @@ tfinal = 6*60;
 T = [0:1:tfinal];
 U = ones(size(T));
 
-lsim(sys,U,T, Inital)
+% lsim(sys,U,T, Inital)
 
     
 
