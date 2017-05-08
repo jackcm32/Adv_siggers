@@ -21,20 +21,21 @@ d2 = normrnd(mu, sigma_d);
 d3 = normrnd(mu, sigma_d);
 w3 = normrnd(mu, sigma_w);
 
-% Set up the state space matricies
-A = [ 0 1 0; 0 c2+1 0; c3 0 1+c4];
-B = [0;c2+d2;d3];
-C = [0 0 1];
-D = w3;
-Ts = [];
 
-sys = ss(A,B,C,D,Ts);
+% Set up the state space matricies
+F = [ 0 1 0; 0 c2+1 0; c3 0 1+c4];
+U = [0;c2;0];
+V = [0;d2;d3];
+H = [0 0 1];
+W = w3;
+
+
 
 tfinal = 6*60;
-T = [0:1:tfinal];
-U = ones(size(T));
 
-% lsim(sys,U,T, Inital)
+for 1:1:tfinal
+    
+end
 
     
 
