@@ -1,14 +1,5 @@
-function [ ] = simulate_system( F, U, H, W, h_init, input, mu, sigma_d, sigma_w, T_FINAL )
+function [ y , h ] = simulate_system( F, U, H, W, h, input, mu, sigma_d, sigma_w )
 % System Simulator
-
-    h3_output = zeros(1,T_FINAL);
-    
-    length(h3_output)
-    
-    
-    h = h_init;
-
-    for t = 1:T_FINAL 
 
     %   Calculate Noise
         d2 = normrnd(mu, sigma_d);
@@ -17,14 +8,7 @@ function [ ] = simulate_system( F, U, H, W, h_init, input, mu, sigma_d, sigma_w,
         w3 = normrnd(mu, sigma_w);
 
     %   Update states  
-    % SUS THIS.......
-        h3_output(t) = H*h + W*w3;
-        h = F*h + U*input(t) + V;
-    end
-    
-    figure();
-    plot(1:T_FINAL,h3_output, 'r')
-    xlabel('Time (Minutes)')
-    ylabel('z_3 water level')
+        y = H*h + W*w3;
+        h = F*h + U*input + V;
 
 end

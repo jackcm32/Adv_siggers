@@ -40,7 +40,16 @@ input = 0.5 * ones(1,T_FINAL);
 h_init = [0.3; 0.1; 0.1];
 
 
-simulate_system( F, U, H, W, h_init, input, T_FINAL )
-kalman_predictor( F, U, H, W, h_init, input, mu, sigma_d, sigma_w, T_FINAL )    
+y = zeros(1,T_FINAL);
+h = h_init;
+
+for t = 1:T_FINAL
+    [y(t), h] = simulate_system( F, U, H, W, h, input(t), mu, sigma_d, sigma_w );
+%     kalman_predictor( F, U, H, W, h_init, input, mu, sigma_d, sigma_w, T_FINAL )    
+end
 
 
+figure();
+plot(1:T_FINAL, y, 'r')
+xlabel('Time (Minutes)')
+ylabel('z_3 water level')
