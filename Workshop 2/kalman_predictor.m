@@ -15,7 +15,6 @@ function [ ] = kalman_predictor( F, U, H, W, h_init, input, mu, sigma_d, sigma_w
         w3 = normrnd(mu, sigma_w);
 
     %   Update states  
-    % SUS THIS.......
         h3_output(t) = H*h + W*w3;
         h = F*h + U*input(t) + V;
     end
