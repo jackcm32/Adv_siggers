@@ -1,27 +1,17 @@
-function [ ] = kalman_predictor( F, U, H, W, h_init, input, mu, sigma_d, sigma_w, T_FINAL )
-%KALMAN_PREDICTOR Summary of this function goes here
-%   Detailed explanation goes here
+function [ x_hat_next, P_next, y_hat ] = kalman_predictor( F, G, H, W, V, input, y, x_hat, P )
+%KALMAN_PREDICTOR 
 
-    h3_output = zeros(1,T_FINAL);
     
-    h = h_init;
-
-    for t = 1:T_FINAL 
-
-    %   Calculate Noise
-        d2 = normrnd(mu, sigma_d);
-        d3 = normrnd(mu, sigma_d);
-        V = [0; d2; d3];
-        w3 = normrnd(mu, sigma_w);
-
-    %   Update states  
-        h3_output(t) = H*h + W*w3;
-        h = F*h + U*input(t) + V;
-    end
+    y_hat = (H * x_hat);
     
-    figure();
-    plot(1:T_FINAL,h3_output, 'r')
-    xlabel('Time (Minutes)')
-    ylabel('z_3 water level')
+    e = (y - y_hat);
+
+    K = (F * P * transpose(H)) * inv(H * P * transpose(H) + W);
+    
+    x_hat_next = (F * x_hat) + (G * input) + (K * e);
+
+%   P_NEXT can be calculated externally, but chose to do it each step
+%   here.
+    P_next = (F * P * transpose(F)) + V - (F * P * transpose(H)) * inv(H * P * transpose(H) + W) * (H * P * transpose(F));
 
 end

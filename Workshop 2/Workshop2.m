@@ -26,8 +26,8 @@ w3 = normrnd(mu, sigma_w);
 
 % Set up the state space matricies
 F = [ 0 1 0; 0 c2+1 0; c3 0 1+c4];
-U = [0;c1;0];
-V = [0;d2;d3];
+G = [0;c1;0];
+V = [0 0 0; 0 sigma_d 0; 0 0 sigma_d];
 H = [0 0 1];
 W = [1];
 
@@ -43,13 +43,27 @@ h_init = [0.3; 0.1; 0.1];
 y = zeros(1,T_FINAL);
 h = h_init;
 
+x_hat_pred = h_init;
+P_pred = eye(3);
+
+% 
+% x_hat_pred(1) = 
+
+
+y_hat_pred = zeros(1,T_FINAL);
+
 for t = 1:T_FINAL
     [y(t), h] = simulate_system( F, U, H, W, h, input(t), mu, sigma_d, sigma_w );
+    
+    [x_hat_pred, P_pred, y_hat_pred(t)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_pred,P_pred);
 %     kalman_predictor( F, U, H, W, h_init, input, mu, sigma_d, sigma_w, T_FINAL )    
+    
 end
 
 
 figure();
 plot(1:T_FINAL, y, 'r')
+hold on;
+plot(1:T_FINAL, y_hat_pred)
 xlabel('Time (Minutes)')
 ylabel('z_3 water level')
