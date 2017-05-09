@@ -4,9 +4,6 @@ function [ ] = kalman_predictor( F, U, H, W, h_init, input, mu, sigma_d, sigma_w
 
     h3_output = zeros(1,T_FINAL);
     
-    length(h3_output)
-    
-    
     h = h_init;
 
     for t = 1:T_FINAL 
