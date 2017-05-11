@@ -51,8 +51,11 @@ P_pred = zeros(3,3,T_FINAL + 1);
 P_pred(:,:,1) = eye(3);
 K_pred = zeros(3,1, T_FINAL);
 
-x_hat_FF = h_init;
-P_FF = eye(3);
+x_hat_FF = zeros(3,1,T_FINAL + 1);
+x_hat_FF(:,:,1) = h_init;
+P_FF = zeros(3,3,T_FINAL + 1);
+P_FF(:,:,1) = eye(3);
+K_FF = zeros(3,1, T_FINAL);
 
 
 y_hat_pred = zeros(1,T_FINAL);
@@ -62,7 +65,7 @@ for t = 1:T_FINAL
     [y(t), h(:,:,t+1)] = simulate_system( F, G, H, W, h(:,:,t), input(t), mu, sigma_d, sigma_w );
     
     [x_hat_pred(:,:,t+1), P_pred(:,:,t+1), y_hat_pred(:,:,t), K_pred(:,:,t)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_pred(:,:,t),P_pred(:,:,t));
-%     [x_hat_FF, P_FF, y_hat_FF(t)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_FF,P_FF);
+    [x_hat_FF(:,:,t+1), P_FF(:,:,t+1), y_hat_FF(:,:,t+1), K_FF(:,:,t+1)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_FF(:,:,t+1),P_FF(:,:,t+1));
     
 end
 
