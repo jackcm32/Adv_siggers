@@ -1,4 +1,4 @@
-function [x_hat_next, P_N_next, y_hat] = kalman_FF( F, G, H, W, V, input, y, x_hat, P_N)
+function [x_hat_next, P_N_next, y_hat, K_f ] = kalman_FF( F, G, H, W, V, input, y, x_hat, P_N)
 % P(N+1) = P_N_next
 % 
 % P(N|N) = P_NN
