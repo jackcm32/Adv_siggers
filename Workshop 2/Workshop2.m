@@ -46,17 +46,21 @@ h = h_init;
 x_hat_pred = h_init;
 P_pred = eye(3);
 
+x_hat_FF = h_init;
+P_FF = eye(3);
+
 % 
 % x_hat_pred(1) = 
 
 
 y_hat_pred = zeros(1,T_FINAL);
+y_hat_FF = zeros(1,T_FINAL);
 
 for t = 1:T_FINAL
     [y(t), h] = simulate_system( F, U, H, W, h, input(t), mu, sigma_d, sigma_w );
     
     [x_hat_pred, P_pred, y_hat_pred(t)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_pred,P_pred);
-%     kalman_predictor( F, U, H, W, h_init, input, mu, sigma_d, sigma_w, T_FINAL )    
+    [x_hat_FF, P_FF, y_hat_FF(t)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_FF,P_FF);
     
 end
 
@@ -65,5 +69,9 @@ figure();
 plot(1:T_FINAL, y, 'r')
 hold on;
 plot(1:T_FINAL, y_hat_pred)
+plot(1:T_FINAL, y_hat_FF, 'g')
 xlabel('Time (Minutes)')
 ylabel('z_3 water level')
+
+figure()
+plot(1:T_FINAL, y_hat_pred - y_hat_FF)
