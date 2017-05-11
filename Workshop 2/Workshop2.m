@@ -72,58 +72,19 @@ P_pred = P_pred(:,:,1: end-1);
 
 
 % COMPARING
-figure()
-% True
-time = 1:(T_FINAL);
-
-plot(time, h(3,:) + p3)
-hold on
-% Measured
-plot(time, y + p3)
-hold on
-% Estimated
-plot(time, x_hat_pred(3,:) + p3)
-hold off
-
-legend('True', 'Measured', 'Estimated')
-
+plot_estimation_error(h, y, x_hat_pred, T_FINAL, p3)
+% plot_estimation_error(h, y, x_hat_FF, T_FINAL)
 
 % Kalman Gain
-figure()
-plot(time, K_pred(1,:))
-hold on
-plot(time, K_pred(2,:))
-hold on
-plot(time, K_pred(3,:))
-hold off
-
-legend('h_2[t]', 'h_2[t+1]', 'h_3[t+1]')
+plot_kalman_gain(K_pred, T_FINAL);
 
 
 % Squared Estimation Error
-figure()
-% Predicted - true squared.
-plot(time,(x_hat_pred(3,:) - h(3,:)).^2)
-hold on
-plot(time,(x_hat_pred(1,:) - h(1,:)).^2)
-hold off
-legend('z3', 'z2')
+plot_squared_estimation_error(x_hat_pred, h, T_FINAL)
 
 
 % Covariance of estimation error
-mean(x_hat_pred(1,:) - h(1,:))^2
-mean(x_hat_pred(2,:) - h(2,:))^2
-mean(x_hat_pred(3,:) - h(3,:))^2
+% mean(x_hat_pred(1,:) - h(1,:))^2
+% mean(x_hat_pred(2,:) - h(2,:))^2
+% mean(x_hat_pred(3,:) - h(3,:))^2
 
-
-
-% figure();
-% plot(1:T_FINAL, y, 'r')
-% hold on;
-% plot(1:T_FINAL, y_hat_pred)
-% plot(1:T_FINAL, y_hat_FF, 'g')
-% xlabel('Time (Minutes)')
-% ylabel('z_3 water level')
-% 
-% figure()
-% plot(1:T_FINAL, y_hat_pred - y_hat_FF)
