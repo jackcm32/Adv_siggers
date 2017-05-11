@@ -10,6 +10,7 @@ function [ output_args ] = plot_squared_estimation_error( x_hat, h, T_FINAL )
     plot(time,(x_hat(1,:) - h(1,:)).^2)
     hold off
     legend('z3', 'z2')
+    title('Squared Estimation Error')
 
 
 end

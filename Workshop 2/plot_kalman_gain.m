@@ -12,6 +12,7 @@ function [] = plot_kalman_gain( K, T_FINAL )
     hold off
 
     legend('h_2[t]', 'h_2[t+1]', 'h_3[t+1]')
+    title('Kalman Gain')
 
 
 end
