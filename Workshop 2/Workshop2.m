@@ -65,7 +65,7 @@ for t = 1:T_FINAL
     [y(t), h(:,:,t+1)] = simulate_system( F, G, H, W, h(:,:,t), input(t), mu, sigma_d, sigma_w );
     
     [x_hat_pred(:,:,t+1), P_pred(:,:,t+1), y_hat_pred(:,:,t), K_pred(:,:,t)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_pred(:,:,t),P_pred(:,:,t));
-    [x_hat_FF(:,:,t+1), P_FF(:,:,t+1), y_hat_FF(:,:,t+1), K_FF(:,:,t+1)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_FF(:,:,t+1),P_FF(:,:,t+1));
+    [x_hat_FF(:,:,t+1), P_FF(:,:,t+1), y_hat_FF(:,:,t), K_FF(:,:,t)] = kalman_FF(F,G,H,W,V,input(t),y(t),x_hat_FF(:,:,t),P_FF(:,:,t));
     
 end
 
@@ -73,17 +73,22 @@ h = h(:,:,1: end-1);
 x_hat_pred = x_hat_pred(:,:,1: end-1);
 P_pred = P_pred(:,:,1: end-1);
 
+x_hat_FF = x_hat_FF(:,:,1: end-1);
+P_FF = P_FF(:,:,1: end-1);
+
 
 % COMPARING
 plot_estimation_error(h, y, x_hat_pred, T_FINAL, p3)
-% plot_estimation_error(h, y, x_hat_FF, T_FINAL)
+plot_estimation_error(h, y, x_hat_FF, T_FINAL, p3)
 
 % Kalman Gain
 plot_kalman_gain(K_pred, T_FINAL);
+plot_kalman_gain(K_FF, T_FINAL);
 
 
 % Squared Estimation Error
-plot_squared_estimation_error(x_hat_pred, h, T_FINAL)
+plot_squared_estimation_error(x_hat_pred, h, T_FINAL);
+plot_squared_estimation_error(x_hat_FF, h, T_FINAL);
 
 
 % Covariance of estimation error

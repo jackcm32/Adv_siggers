@@ -8,7 +8,7 @@ function [x_hat_next, P_N_next, y_hat, K_f ] = kalman_FF( F, G, H, W, V, input, 
 
 
 %   K_f matrix
-    K_f = P*transpose(H)*inv(H*P*transpose(H) + W);
+    K_f = P_N*transpose(H)*inv(H*P_N*transpose(H) + W);
 
 %   Caluate the innovation 
     y_hat = (H * x_hat);
