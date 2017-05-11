@@ -1,4 +1,4 @@
-function [ x_hat_next, P_next, y_hat ] = kalman_predictor( F, G, H, W, V, input, y, x_hat, P )
+function [ x_hat_next, P_next, y_hat, K ] = kalman_predictor( F, G, H, W, V, input, y, x_hat, P )
 %KALMAN_PREDICTOR 
 
     
