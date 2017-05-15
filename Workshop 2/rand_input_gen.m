@@ -5,7 +5,7 @@ function [ input ] = rand_input_gen( T_FINAL )
     input1 = 0.5 * ones(1,T_FINAL);
     input2 = 0.3 * ones(1,T_FINAL);
 
-    cuts = sort(randi([1 T_FINAL],1, 30));
+    cuts = sort(randi([1 T_FINAL],1, 60));
 
     i = 2;
 
