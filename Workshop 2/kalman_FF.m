@@ -20,7 +20,7 @@ function [x_hat_next, P_N_next, y_hat, K_f ] = kalman_FF( F, G, H, W, V, input, 
 
     x_hat_NN = x_hat + K_f * e;
 
-    x_hat_next = F * x_hat_NN;
+    x_hat_next = F * x_hat_NN + (G * input);
     
     P_NN = P_N - P_N * transpose(H) * inv(H * P_N * transpose(H) + W) * H * P_N;
     
