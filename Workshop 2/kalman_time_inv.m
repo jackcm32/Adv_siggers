@@ -1,4 +1,4 @@
-function [ x_hat_next, y_hat ] = kalman_time_inv( F, G, H, W, V, input, y, x_hat, K )
+function [ x_hat_next, y_hat ] = kalman_time_inv( F, G, H, W, V, input, y, x_hat, K_bar )
 %KALMAN_TIME_INVARIANT 
 
     
@@ -8,7 +8,7 @@ function [ x_hat_next, y_hat ] = kalman_time_inv( F, G, H, W, V, input, y, x_hat
 
 %     Use pre-calculated K value
     
-    x_hat_next = (F * x_hat) + (G * input) + (K * e);
+    x_hat_next = (F * x_hat) + (G * input) + (K_bar * e);
     
 end
 
