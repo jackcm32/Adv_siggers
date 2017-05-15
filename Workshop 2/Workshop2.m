@@ -51,28 +51,36 @@ y = zeros(1,T_FINAL);
 h = zeros(3,1,T_FINAL + 1);
 h(:,:,1) = h_init;
 
+% Predictor model init's
 x_hat_pred = zeros(3,1,T_FINAL + 1);
 x_hat_pred(:,:,1) = h_init;
 P_pred = zeros(3,3,T_FINAL + 1);
 P_pred(:,:,1) = eye(3);
 K_pred = zeros(3,1, T_FINAL);
 
+% Filter form model init's
 x_hat_FF = zeros(3,1,T_FINAL + 1);
 x_hat_FF(:,:,1) = h_init;
 P_FF = zeros(3,3,T_FINAL + 1);
 P_FF(:,:,1) = eye(3);
 K_FF = zeros(3,1, T_FINAL);
 
+% Time inv model init's
+x_hat_inv = zeros(3,1,T_FINAL + 1);
+x_hat_inv(:,:,1) = h_init;
+P_bar = dare(transpose(F),transpose(H),V,W);
+K_bar = (F * P_bar * transpose(H)) * inv(H * P_bar * transpose(H) + W);
 
 y_hat_pred = zeros(1,T_FINAL);
 y_hat_FF = zeros(1,T_FINAL);
+y_hat_inv = zeros(1,T_FINAL);
 
 for t = 1:T_FINAL
     [y(t), h(:,:,t+1)] = simulate_system( F, G, H, W, h(:,:,t), input(t), mu, sigma_d, sigma_w );
     
     [x_hat_pred(:,:,t+1), P_pred(:,:,t+1), y_hat_pred(:,:,t), K_pred(:,:,t)] = kalman_predictor(F,G,H,W,V,input(t),y(t),x_hat_pred(:,:,t),P_pred(:,:,t));
     [x_hat_FF(:,:,t+1), P_FF(:,:,t+1), y_hat_FF(:,:,t), K_FF(:,:,t)] = kalman_FF(F,G,H,W,V,input(t),y(t),x_hat_FF(:,:,t),P_FF(:,:,t));
-    
+    [x_hat_inv(:,:,t+1), y_hat_inv(:,:,t)] = kalman_time_inv( F, G, H, W, V, input(t), y(t), x_hat_inv(:,:,t), K_bar );
 end
 
 h = h(:,:,1: end-1);
@@ -82,13 +90,15 @@ P_pred = P_pred(:,:,1: end-1);
 x_hat_FF = x_hat_FF(:,:,1: end-1);
 P_FF = P_FF(:,:,1: end-1);
 
+x_hat_inv = x_hat_inv(:,:,1: end-1);
 
 % Input and how the system evolves 
 plot_system( h, y, T_FINAL, input, z1, p3 )
 
 % COMPARING
-plot_estimation_error(h, y, x_hat_pred, T_FINAL, p3)
-plot_estimation_error(h, y, x_hat_FF, T_FINAL, p3)
+plot_estimation_error(h, y, x_hat_pred, T_FINAL, p3, 'Predictor Form')
+plot_estimation_error(h, y, x_hat_FF, T_FINAL, p3, 'Filter Form')
+plot_estimation_error(h, y, x_hat_inv, T_FINAL, p3, 'Time-Invariant Form')
 
 % Kalman Gain
 plot_kalman_gain(K_pred, T_FINAL);
@@ -98,6 +108,7 @@ plot_kalman_gain(K_FF, T_FINAL);
 % Squared Estimation Error
 plot_squared_estimation_error(x_hat_pred, h, T_FINAL);
 plot_squared_estimation_error(x_hat_FF, h, T_FINAL);
+plot_squared_estimation_error(x_hat_inv, h, T_FINAL);
 
 
 % Covariance of estimation error

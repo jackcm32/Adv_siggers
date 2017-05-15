@@ -1,4 +1,4 @@
-function [] = plot_estimation_error( h, y, x_hat, T_FINAL, p3 )
+function [] = plot_estimation_error( h, y, x_hat, T_FINAL, p3, title_str )
 %PLOT_ESTIMATION_ERROR Plots the estimation error for 3 signals.
 
     figure()
@@ -16,7 +16,8 @@ function [] = plot_estimation_error( h, y, x_hat, T_FINAL, p3 )
     hold off
 
     legend('True', 'Measured', 'Estimated')
-    title('Estimation Error')
+    title_str = strcat('Estimation Error: ', title_str);
+    title(title_str)
 
 end
 
