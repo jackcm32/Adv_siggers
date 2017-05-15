@@ -84,7 +84,7 @@ P_FF = P_FF(:,:,1: end-1);
 
 
 % Input and how the system evolves 
-plot_system( h, y, T_FINAL, input )
+plot_system( h, y, T_FINAL, input, z1, p3 )
 
 % COMPARING
 plot_estimation_error(h, y, x_hat_pred, T_FINAL, p3)
