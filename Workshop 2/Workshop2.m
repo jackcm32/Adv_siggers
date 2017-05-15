@@ -33,8 +33,14 @@ W = [1];
 
 T_FINAL = 6*60;
 
-% Input signal for the gate
-input = 0.5 * ones(1,T_FINAL);
+% Input signal for the gate (Random)
+input = rand_input_gen( T_FINAL );
+
+% % Input signal for the gate (fully lo)
+% input = 0.5 * ones(1,T_FINAL);
+% 
+% % Input signal for the gate (fully hi)
+% input = 0.3 * ones(1,T_FINAL);
 
 % Inital conditions
 h_init = [0.3; 0.1; 0.1];
