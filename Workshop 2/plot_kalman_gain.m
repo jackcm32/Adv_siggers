@@ -1,4 +1,4 @@
-function [] = plot_kalman_gain( K, T_FINAL )
+function [] = plot_kalman_gain( K, T_FINAL, title_str, filename )
 %PLOT_KALMAN_GAIN 
     
     time = 1:(T_FINAL);
@@ -12,8 +12,11 @@ function [] = plot_kalman_gain( K, T_FINAL )
     hold off
 
     legend('h_2[t]', 'h_2[t+1]', 'h_3[t+1]')
-    title('Kalman Gain')
 
-
+    title_str = strcat('Kalman Gain: ', title_str);
+    title(title_str)
+    
+    filename = strcat('figures/', filename, '.png');
+    saveas(gcf, filename)
 end
 
