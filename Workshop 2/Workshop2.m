@@ -34,7 +34,8 @@ W = [1];
 T_FINAL = 6*60;
 
 % Input signal for the gate (Random)
-input = rand_input_gen( T_FINAL );
+% input = rand_input_gen( T_FINAL );
+input = cell2mat(struct2cell(load('input.mat')));
 
 % % Input signal for the gate (fully lo)
 % input = 0.5 * ones(1,T_FINAL);
