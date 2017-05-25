@@ -1,4 +1,4 @@
-function [ output_args ] = plot_squared_estimation_error( x_hat, h, T_FINAL )
+function [ output_args ] = plot_squared_estimation_error( x_hat, h, T_FINAL, title_str, filename )
 %PLOT_SQUARED_ESTIMATION_ERROR 
 
     time = 1:(T_FINAL);
@@ -10,8 +10,12 @@ function [ output_args ] = plot_squared_estimation_error( x_hat, h, T_FINAL )
     plot(time,(x_hat(1,:) - h(1,:)).^2)
     hold off
     legend('z3', 'z2')
-    title('Squared Estimation Error')
-
+    
+    title_str = strcat('Squared Estimation Error: ', title_str);
+    title(title_str)
+    
+    filename = strcat('figures/', filename, '.png');
+    saveas(gcf, filename)
 
 end
 

@@ -34,7 +34,8 @@ W = [1];
 T_FINAL = 6*60;
 
 % Input signal for the gate (Random)
-input = rand_input_gen( T_FINAL );
+% input = rand_input_gen( T_FINAL );
+input = cell2mat(struct2cell(load('input.mat')));
 
 % % Input signal for the gate (fully lo)
 % input = 0.5 * ones(1,T_FINAL);
@@ -96,19 +97,19 @@ x_hat_inv = x_hat_inv(:,:,1: end-1);
 plot_system( h, y, T_FINAL, input, z1, p3 )
 
 % COMPARING
-plot_estimation_error(h, y, x_hat_pred, T_FINAL, p3, 'Predictor Form')
-plot_estimation_error(h, y, x_hat_FF, T_FINAL, p3, 'Filter Form')
-plot_estimation_error(h, y, x_hat_inv, T_FINAL, p3, 'Time-Invariant Form')
+plot_estimation_error(h, y, x_hat_pred, T_FINAL, p3, 'Predictor Form', 'K_PF_comparison')
+plot_estimation_error(h, y, x_hat_FF, T_FINAL, p3, 'Filter Form', 'K_FF_comparison')
+plot_estimation_error(h, y, x_hat_inv, T_FINAL, p3, 'Time-Invariant Form', 'K_TI_comparison')
 
 % Kalman Gain
-plot_kalman_gain(K_pred, T_FINAL);
-plot_kalman_gain(K_FF, T_FINAL);
+plot_kalman_gain(K_pred, T_FINAL, 'Predictor Form', 'K_PF_gain');
+plot_kalman_gain(K_FF, T_FINAL,'Filter Form', 'K_FF_gain');
 
 
 % Squared Estimation Error
-plot_squared_estimation_error(x_hat_pred, h, T_FINAL);
-plot_squared_estimation_error(x_hat_FF, h, T_FINAL);
-plot_squared_estimation_error(x_hat_inv, h, T_FINAL);
+plot_squared_estimation_error(x_hat_pred, h, T_FINAL, 'Predictor Form', 'K_PF_squared_error');
+plot_squared_estimation_error(x_hat_FF, h, T_FINAL,'Filter Form', 'K_FF_squared_error');
+plot_squared_estimation_error(x_hat_inv, h, T_FINAL,'Time Invariant', 'K_TI_squared_error');
 
 
 % Covariance of estimation error

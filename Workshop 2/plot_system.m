@@ -10,7 +10,7 @@ function [] = plot_system( h, y, T_FINAL, input, z1, p3)
     title('Input')
     ylim([2.4 2.8])
     xlabel('Minutes')
-    ylabel('Input water level')
+    ylabel('Gate Position')
     
     % Estimated
     subplot(2,1,2)
@@ -21,7 +21,7 @@ function [] = plot_system( h, y, T_FINAL, input, z1, p3)
     
     
     
-
+    saveas(gcf, 'figures/input_output_plot.png')
 
 end
 

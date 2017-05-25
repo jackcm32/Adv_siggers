@@ -44,7 +44,8 @@ V = [0 0 0 0; 0 (sigma2_d) 0 0; 0 0 sigma2_d 0; 0 0 0 sigma2_d_4];
 T_FINAL = 12*60;
 
 % Input signal for the gate (Random)
-input = rand_input_gen( T_FINAL );
+% input = rand_input_gen( T_FINAL );
+input = cell2mat(struct2cell(load('input2.mat')));
 
 % % Input signal for the gate (fully lo)
 % input = 0.5 * ones(1,T_FINAL);
@@ -113,16 +114,16 @@ plot_system( h_sym, y, T_FINAL, input, z1, p3 )
 
 
 % COMPARING
-plot_estimation_error(h_sym, y, x_hat_pred, T_FINAL, p3, 'Kalman Filter With Outflow')
+plot_estimation_error(h_sym, y, x_hat_pred, T_FINAL, p3, 'Kalman Filter With Outflow', 'K_outflow_comparison')
 % plot_estimation_error(h, y, x_hat_FF, T_FINAL, p3)
 
 % Kalman Gain
-plot_kalman_gain(K_pred, T_FINAL);
+plot_kalman_gain(K_pred, T_FINAL, 'Kalman Filter With Outflow', 'K_outflow_gain')
 % plot_kalman_gain(K_FF, T_FINAL);
 
 
 % Squared Estimation Error
-plot_squared_estimation_error(x_hat_pred, h, T_FINAL);
+plot_squared_estimation_error(x_hat_pred, h, T_FINAL, 'Kalman Filter With Outflow', 'K_outflow_squared_error');
 % plot_squared_estimation_error(x_hat_FF, h, T_FINAL);
 
 
