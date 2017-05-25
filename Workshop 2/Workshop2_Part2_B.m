@@ -20,7 +20,7 @@ sigma2_d = 0.00500;
 sigma_w = 0.00375;
 
 q_c = 0.008; % constant flow between 
-
+q_c_2 = 0.008;
 
 % Set up the state space matricies
 F_sym = [ 0 1 0; 0 c2+1 0; c3 0 1+c4];
@@ -47,7 +47,7 @@ h_sym(:,:,1) = h_init_sym;
 
 for t = 1:T_FINAL    
     
-    [y(t), h_sym(:,:,t+1)] = simulate_system_outflow( F_sym, G_sym, H_sym, W_sym, h_sym(:,:,t), input(t), mu, sigma2_d, sigma_w, q_c );
+    [y(t), h_sym(:,:,t+1)] = simulate_system_outflow_B( F_sym, G_sym, H_sym, W_sym, h_sym(:,:,t), input(t), mu, sigma2_d, sigma_w, q_c, q_c_2 );
     
 end
 
@@ -57,77 +57,78 @@ plot_system( h_sym, y, T_FINAL, input, z1, p3 )
 
 % Simulations 
 % Simulations 
-sigma2_d_4_1 = 0.1000;
-sigma2_d_4_2 = 0.0100;
-sigma2_d_4_3= 0.000100;
+sigma2_d_4 = 0.000100;
+sigma2_d_5_1 = 0.1000;
+sigma2_d_5_2 = 0.0100;
+sigma2_d_5_3= 0.000100;
 q_out_4 = 0.008;  % Inital value for q_out;
 q_out_5 = 0;
 q_out_6 = 0.1;   
-`
+
 % Kalman Filter with outflow modeled
-F = [ 0 1 0 0; 0 c2+1 0 -1; c3 0 1+c4 0; 0 0 0 1];
-G = [0;c1;0; 0];
-H = [0 0 1 0];
+F = [ 0 1 0 0 0; 0 c2+1 0 -1 0; c3 0 1+c4 0 -1; 0 0 0 1 0; 0 0 0 0 1];
+G = [0;c1;0; 0; 0];
+H = [0 0 1 0 0];
 W = [1];
-V_1 = [0 0 0 0; 0 (sigma2_d) 0 0; 0 0 sigma2_d 0; 0 0 0 sigma2_d_4_1];
-V_2 = [0 0 0 0; 0 (sigma2_d) 0 0; 0 0 sigma2_d 0; 0 0 0 sigma2_d_4_2];
-V_3 = [0 0 0 0; 0 (sigma2_d) 0 0; 0 0 sigma2_d 0; 0 0 0 sigma2_d_4_3];
+V_1 = [0 0 0 0 0; 0 (sigma2_d) 0 0 0; 0 0 sigma2_d 0 0; 0 0 0 sigma2_d_4 0; 0 0 0 0 sigma2_d_5_1];
+V_2 = [0 0 0 0 0; 0 (sigma2_d) 0 0 0; 0 0 sigma2_d 0 0; 0 0 0 sigma2_d_4 0; 0 0 0 0 sigma2_d_5_2];
+V_3 = [0 0 0 0 0; 0 (sigma2_d) 0 0 0; 0 0 sigma2_d 0 0; 0 0 0 sigma2_d_4 0; 0 0 0 0 sigma2_d_5_3];
 
-h_init_4 = [0.3; 0.1; 0.1; q_out_4];
-h_init_5 = [0.3; 0.1; 0.1; q_out_5];
-h_init_6 = [0.3; 0.1; 0.1; q_out_6];
+h_init_4 = [0.3; 0.1; 0.1; 0.1; q_out_4];
+h_init_5 = [0.3; 0.1; 0.1; 0.1; q_out_5];
+h_init_6 = [0.3; 0.1; 0.1; 0.1; q_out_6];
 
-h = zeros(4,1,T_FINAL + 1);
+h = zeros(5,1,T_FINAL + 1);
 h(:,:,1) = h_init_6;
 
-x_hat_pred_1 = zeros(4,1,T_FINAL + 1);
+x_hat_pred_1 = zeros(5,1,T_FINAL + 1);
 x_hat_pred_1(:,:,1) = h_init_6;
-P_pred_1 = zeros(4,4,T_FINAL + 1);
-P_pred_1(:,:,1) = eye(4);
-K_pred_1 = zeros(4,1, T_FINAL);
+P_pred_1 = zeros(5,5,T_FINAL + 1);
+P_pred_1(:,:,1) = eye(5);
+K_pred_1 = zeros(5,1, T_FINAL);
 
 y_hat_pred_1 = zeros(1,T_FINAL);
 
 
-x_hat_pred_2 = zeros(4,1,T_FINAL + 1);
+x_hat_pred_2 = zeros(5,1,T_FINAL + 1);
 x_hat_pred_2(:,:,1) = h_init_6;
-P_pred_2 = zeros(4,4,T_FINAL + 1);
-P_pred_2(:,:,1) = eye(4);
-K_pred_2 = zeros(4,1, T_FINAL);
+P_pred_2 = zeros(5,5,T_FINAL + 1);
+P_pred_2(:,:,1) = eye(5);
+K_pred_2 = zeros(5,1, T_FINAL);
 
 y_hat_pred_2 = zeros(1,T_FINAL);
 
 
-x_hat_pred_3 = zeros(4,1,T_FINAL + 1);
+x_hat_pred_3 = zeros(5,1,T_FINAL + 1);
 x_hat_pred_3(:,:,1) = h_init_6;
-P_pred_3 = zeros(4,4,T_FINAL + 1);
-P_pred_3(:,:,1) = eye(4);
-K_pred_3 = zeros(4,1, T_FINAL);
+P_pred_3 = zeros(5,5,T_FINAL + 1);
+P_pred_3(:,:,1) = eye(5);
+K_pred_3 = zeros(5,1, T_FINAL);
 
 y_hat_pred_3 = zeros(1,T_FINAL);
 
 
-x_hat_pred_4 = zeros(4,1,T_FINAL + 1);
+x_hat_pred_4 = zeros(5,1,T_FINAL + 1);
 x_hat_pred_4(:,:,1) = h_init_4;
-P_pred_4 = zeros(4,4,T_FINAL + 1);
-P_pred_4(:,:,1) = eye(4);
-K_pred_4 = zeros(4,1, T_FINAL);
+P_pred_4 = zeros(5,5,T_FINAL + 1);
+P_pred_4(:,:,1) = eye(5);
+K_pred_4 = zeros(5,1, T_FINAL);
 
 y_hat_pred_4 = zeros(1,T_FINAL);
 
-x_hat_pred_5 = zeros(4,1,T_FINAL + 1);
+x_hat_pred_5 = zeros(5,1,T_FINAL + 1);
 x_hat_pred_5(:,:,1) = h_init_5;
-P_pred_5 = zeros(4,4,T_FINAL + 1);
-P_pred_5(:,:,1) = eye(4);
-K_pred_5 = zeros(4,1, T_FINAL);
+P_pred_5 = zeros(5,5,T_FINAL + 1);
+P_pred_5(:,:,1) = eye(5);
+K_pred_5 = zeros(5,1, T_FINAL);
 
 y_hat_pred_5 = zeros(1,T_FINAL);
 
-x_hat_pred_6 = zeros(4,1,T_FINAL + 1);
+x_hat_pred_6 = zeros(5,1,T_FINAL + 1);
 x_hat_pred_6(:,:,1) = h_init_6;
-P_pred_6 = zeros(4,4,T_FINAL + 1);
-P_pred_6(:,:,1) = eye(4);
-K_pred_6 = zeros(4,1, T_FINAL);
+P_pred_6 = zeros(5,5,T_FINAL + 1);
+P_pred_6(:,:,1) = eye(5);
+K_pred_6 = zeros(5,1, T_FINAL);
 
 y_hat_pred_6 = zeros(1,T_FINAL);
 
@@ -166,9 +167,9 @@ P_pred_6 = P_pred_6(:,:,1: end-1);
 % plot_estimation_error(h, y, x_hat_FF, T_FINAL, p3)
 
 
-plot_outflow_info(h_sym, P_pred_1, x_hat_pred_1, T_FINAL, p2, q_c, sigma2_d_4_1 )
-plot_outflow_info(h_sym, P_pred_2, x_hat_pred_2, T_FINAL, p2, q_c, sigma2_d_4_2 )
-plot_outflow_info(h_sym, P_pred_3, x_hat_pred_3, T_FINAL, p2, q_c, sigma2_d_4_3 )
-plot_outflow_info(h_sym, P_pred_4, x_hat_pred_4, T_FINAL, p2, q_c, sigma2_d_4_1 )
-plot_outflow_info(h_sym, P_pred_5, x_hat_pred_5, T_FINAL, p2, q_c, sigma2_d_4_1 )
-plot_outflow_info(h_sym, P_pred_6, x_hat_pred_6, T_FINAL, p2, q_c, sigma2_d_4_1 )
+plot_outflow_info_B(h_sym, P_pred_1, x_hat_pred_1, T_FINAL, p2, q_c, sigma2_d_4, sigma2_d_5_1 )
+plot_outflow_info_B(h_sym, P_pred_2, x_hat_pred_2, T_FINAL, p2, q_c, sigma2_d_4, sigma2_d_5_2 )
+plot_outflow_info_B(h_sym, P_pred_3, x_hat_pred_3, T_FINAL, p2, q_c, sigma2_d_4, sigma2_d_5_3 )
+plot_outflow_info_B(h_sym, P_pred_4, x_hat_pred_4, T_FINAL, p2, q_c, sigma2_d_4, sigma2_d_5_1 )
+plot_outflow_info_B(h_sym, P_pred_5, x_hat_pred_5, T_FINAL, p2, q_c, sigma2_d_4, sigma2_d_5_1 )
+plot_outflow_info_B(h_sym, P_pred_6, x_hat_pred_6, T_FINAL, p2, q_c, sigma2_d_4, sigma2_d_5_1 )
