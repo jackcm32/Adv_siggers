@@ -4,6 +4,9 @@ function [ output_args ] = plot_squared_estimation_error( x_hat, h, T_FINAL, tit
     time = 1:(T_FINAL);
 
     figure()
+%     figure(11)
+%     subplot(3,1,n)
+    
     % Predicted - true squared.
     plot(time,(x_hat(3,:) - h(3,:)).^2)
     hold on
@@ -14,8 +17,10 @@ function [ output_args ] = plot_squared_estimation_error( x_hat, h, T_FINAL, tit
     title_str = strcat('Squared Estimation Error: ', title_str);
     title(title_str)
     
-    filename = strcat('figures/', filename, '.png');
-    saveas(gcf, filename)
+    ylim([0 0.003])
+    
+%     filename = strcat('figures/', filename, '.png');
+%     saveas(gcf, filename)
 
 end
 
